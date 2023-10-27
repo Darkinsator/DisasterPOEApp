@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class DisasterPOEApp : DbMigration
+    public partial class _new : DbMigration
     {
         public override void Up()
         {
@@ -53,6 +53,19 @@
                 .PrimaryKey(t => t.id);
             
             CreateTable(
+                "dbo.ResourceAllocations",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        DisasterId = c.Int(nullable: false),
+                        MoneyDonationId = c.Int(nullable: false),
+                        AmountAllocated = c.Int(nullable: false),
+                        Description = c.String(),
+                        AllocationDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Users",
                 c => new
                     {
@@ -69,6 +82,7 @@
         public override void Down()
         {
             DropTable("dbo.Users");
+            DropTable("dbo.ResourceAllocations");
             DropTable("dbo.MoneyDonations");
             DropTable("dbo.GoodsDonations");
             DropTable("dbo.Disasters");

@@ -22,7 +22,7 @@ namespace DisasterPOEApp.Controllers
             IEnumerable<User> objStudentDetailsList = db.Users.ToList();
             return View(objStudentDetailsList);
 
-            return View(db.Users.ToList());
+            //return View(db.Users.ToList());
         }
 
         public ActionResult Menu()

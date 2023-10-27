@@ -28,5 +28,7 @@ namespace DisasterPOEApp.Data
         public System.Data.Entity.DbSet<DisastePOEApp.Models.GoodsDonation> GoodsDonations { get; set; }
 
         public System.Data.Entity.DbSet<DisasterApp.Models.MoneyDonation> MoneyDonations { get; set; }
+
+        public System.Data.Entity.DbSet<DisasterPOEApp.Models.ResourceAllocation> ResourceAllocation { get; set; }
     }
 }

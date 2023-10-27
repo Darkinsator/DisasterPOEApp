@@ -7,13 +7,13 @@ namespace DisasterPOEApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class DisasterPOEApp : IMigrationMetadata
+    public sealed partial class _new : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(DisasterPOEApp));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_new));
         
         string IMigrationMetadata.Id
         {
-            get { return "202309211242411_DisasterPOEApp"; }
+            get { return "202310271156299_new"; }
         }
         
         string IMigrationMetadata.Source

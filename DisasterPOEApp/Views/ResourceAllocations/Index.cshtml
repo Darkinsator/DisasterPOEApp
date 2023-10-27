@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DisasterPOEApp.Models.ResourceAllocation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Money allocation", "MoneyAllocation")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DisasterId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoneyDonationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmountAllocated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AllocationDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DisasterId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MoneyDonationId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmountAllocated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AllocationDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
