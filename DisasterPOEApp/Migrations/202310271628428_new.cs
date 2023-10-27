@@ -53,6 +53,17 @@
                 .PrimaryKey(t => t.id);
             
             CreateTable(
+                "dbo.Purchases",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        amount = c.Int(nullable: false),
+                        description = c.String(),
+                        name = c.String(),
+                    })
+                .PrimaryKey(t => t.id);
+            
+            CreateTable(
                 "dbo.ResourceAllocations",
                 c => new
                     {
@@ -83,6 +94,7 @@
         {
             DropTable("dbo.Users");
             DropTable("dbo.ResourceAllocations");
+            DropTable("dbo.Purchases");
             DropTable("dbo.MoneyDonations");
             DropTable("dbo.GoodsDonations");
             DropTable("dbo.Disasters");
