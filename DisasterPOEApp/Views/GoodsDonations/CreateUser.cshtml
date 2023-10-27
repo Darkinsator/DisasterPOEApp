@@ -1,0 +1,74 @@
+﻿@model DisastePOEApp.Models.GoodsDonation
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>GoodsDonation</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group" style="color:azure">
+        @Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.category, new SelectList(new[] { "Clothes", "Non-Perishable Foods" }), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.category, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" style="color:azure">
+        @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" style="color:azure">
+        @Html.LabelFor(model => model.items, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.items, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.items, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group" style="color:azure">
+        @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="date" id="date" name="date" class="form-control">
+            @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <script>
+        // JavaScript to add date selection using Bootstrap Datepicker
+        $(document).ready(function () {
+            $('#startDate').datepicker({
+                format: 'mm/dd/yyyy',
+                autoclose: true
+            });
+        });
+    </script>
+
+    <div class="form-group" style="color:azure">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

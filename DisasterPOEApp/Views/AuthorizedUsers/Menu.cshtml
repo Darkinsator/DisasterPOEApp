@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+}
+
+<h2>Menu</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br>
+    @Html.ActionLink("VIEW ALL DISASTER REQUESTS", "Index", "Disasters")
+    <br>
+    @Html.ActionLink("VIEW ALL GOODS DONATIONS", "Index", "GoodsDonations")
+    <br>
+    @Html.ActionLink("VIEW ALL MONETARY DONATIONS", "Index", "MoneyDonations")
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

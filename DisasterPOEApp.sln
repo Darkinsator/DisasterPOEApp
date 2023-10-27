@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterPOEApp", "DisasterPOEApp\DisasterPOEApp.csproj", "{05E6DFCE-A93A-49A1-A668-63086F279719}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05E6DFCE-A93A-49A1-A668-63086F279719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05E6DFCE-A93A-49A1-A668-63086F279719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05E6DFCE-A93A-49A1-A668-63086F279719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05E6DFCE-A93A-49A1-A668-63086F279719}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4395C38F-AB49-4D98-8F9C-40E7986F5E66}
+	EndGlobalSection
+EndGlobal
