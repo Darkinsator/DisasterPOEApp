@@ -1,17 +1,27 @@
-﻿
-@model DisasterPOEApp.Models.ResourceAllocation
+﻿@model DisasterPOEApp.Models.ResourceAllocation
+
 
 <h1>Allocate Money to Disaster</h1>
 
-<form asp-controller="MoneyAllocation" asp-action="AllocateMoney" method="post">
+<form asp-controller="ResourceAllocation" asp-action="AllocateMoney" method="post">
     <div class="form-group">
         <label for="DisasterId">Disaster:</label>
-        <select asp-for="DisasterId" asp-items="ViewBag.Disasters" class="form-control">
+        <select asp-for="DisasterId" asp-items="new SelectList((List<DisasterPOEApp.Models.Disaster>)ViewData[" Disasters"], "Id" , "Location" )" class="form-control">
             <option value="">Select a disaster</option>
         </select>
     </div>
 
-    <!-- Other form fields -->
+    <div class="form-group">
+        <label for="MoneyDonationId">Money Donation:</label>
+        <select asp-for="MoneyDonationId" asp-items="new SelectList((List<DisasterApp.Models.MoneyDonation>)ViewData[" AvailableMoneyDonations"], "Id" , "Amount" )" class="form-control">
+            <option value="">Select a money donation</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description:</label>
+        <input asp-for="Description" class="form-control" />
+    </div>
 
     <button type="submit" class="btn btn-primary">Allocate Money</button>
 </form>

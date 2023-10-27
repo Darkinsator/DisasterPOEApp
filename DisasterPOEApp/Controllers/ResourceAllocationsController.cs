@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DisasterPOEApp.Data;
-using DisasterPOEApp.Migrations;
 using DisasterPOEApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+
 namespace DisasterPOEApp.Controllers
-
-
 {
-    public class View : Controller
+    public class ResourceAllocationsController : Controller
     {
         private DisasterPOEAppContext db = new DisasterPOEAppContext();
 
-        private readonly string _connectionString = "Server=tcp:newserverst10101149.database.windows.net,1433;Initial Catalog = databaseST10101149; Persist Security Info=False;User ID = adman; Password=AdminOP1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout = 30;";
+        
+
         // GET: ResourceAllocations
         public ActionResult Index()
         {
@@ -133,38 +129,15 @@ namespace DisasterPOEApp.Controllers
         }
 
 
-        public ActionResult AllocateMoney()
+        public IActionResult AllocateMoney()
         {
-            // SQL Connection and Query
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                using (var command = new SqlCommand("SELECT Id, Location FROM Disaster", connection))
-                {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        var disasters = new List<Disaster>();
-
-                        while (reader.Read())
-                        {
-                            disasters.Add(new Disaster
-                            {
-                                Id = reader.GetInt32(0),
-                                Location = reader.GetString(1)
-                            });
-                        }
-
-                        ViewBag.Disasters = new SelectList(disasters, "Id", "Location");
-                    }
-                }
-            }
-
-            return View();
+            ViewData["Disasters"] = new SelectList(db.Disasters, "Id", "Location");
+            ViewData["AvailableMoneyDonations"] = new SelectList(db.MoneyDonations.Where(d => d.amount > 0), "id", "amount");
+            return (IActionResult)View();
         }
 
         [HttpPost]
-        public ActionResult AllocateMoney(int DisasterId, int MoneyDonationId, string Description)
+        public IActionResult AllocateMoney(int DisasterId, int MoneyDonationId, string Description)
         {
             if (ModelState.IsValid)
             {
@@ -194,16 +167,14 @@ namespace DisasterPOEApp.Controllers
                     db.ResourceAllocation.Add(allocation);
                     db.SaveChanges();
 
-                    return RedirectToAction("Index"); // Redirect to a page of your choice
+                    return (IActionResult)RedirectToAction("Index"); // Redirect to a page of your choice
                 }
             }
 
-            var disasters = db.Disasters.ToList();
-            var availableMoneyDonations = db.MoneyDonations.Where(d => d.amount > 0).ToList();
-            ViewData["Disasters"] = new SelectList(disasters, "Id", "Location");
-            ViewData["AvailableMoneyDonations"] = new SelectList(availableMoneyDonations, "Id", "Amount");
-
-            return View();
+            // Handle validation errors and return to the allocation form
+            ViewData["Disasters"] = db.Disasters.ToList();
+            ViewData["AvailableMoneyDonations"] = db.MoneyDonations.Where(d => d.amount > 0).ToList();
+            return (IActionResult)View();
         }
     }
 }
