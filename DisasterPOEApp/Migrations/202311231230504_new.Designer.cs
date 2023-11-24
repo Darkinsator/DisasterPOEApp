@@ -13,7 +13,7 @@ namespace DisasterPOEApp.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202310271628428_new"; }
+            get { return "202311231230504_new"; }
         }
         
         string IMigrationMetadata.Source

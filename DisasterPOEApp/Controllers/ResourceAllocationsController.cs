@@ -8,15 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using DisasterPOEApp.Data;
 using DisasterPOEApp.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DisasterPOEApp.Controllers
 {
     public class ResourceAllocationsController : Controller
     {
         private DisasterPOEAppContext db = new DisasterPOEAppContext();
-
-        
 
         // GET: ResourceAllocations
         public ActionResult Index()
@@ -42,22 +39,41 @@ namespace DisasterPOEApp.Controllers
         // GET: ResourceAllocations/Create
         public ActionResult Create()
         {
+            // Populate dropdown lists
+            ViewBag.DisasterList = new SelectList(db.Disasters, "Id", "Location");
+            ViewBag.AmountAllocatedList = new SelectList(db.MoneyDonations, "Amount", "Amount");
+            ViewBag.ResourceList = new SelectList(db.GoodsDonations, "Description", "Description");
+
             return View();
         }
 
         // POST: ResourceAllocations/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DisasterId,MoneyDonationId,AmountAllocated,Description,AllocationDate")] ResourceAllocation resourceAllocation)
+        public ActionResult Create([Bind(Include = "Id,DisasterId,AmountAllocated,Resource,ResourceAmount,AllocationDate")] ResourceAllocation resourceAllocation)
         {
             if (ModelState.IsValid)
             {
+                // Set MoneyDonationId based on the selected amount
+                var selectedAmount = int.Parse(Request["AmountAllocated"]);
+                var moneyDonation = db.MoneyDonations.FirstOrDefault(d => d.amount == selectedAmount);
+                resourceAllocation.MoneyDonationId = (int)(moneyDonation?.id);
+
+                // Set GoodsDonationId based on the selected resource
+                var selectedResource = Request["Resource"];
+                var goodsDonation = db.GoodsDonations.FirstOrDefault(d => d.description == selectedResource);
+                resourceAllocation.GoodsDonationId = (int)(goodsDonation?.id);
+
+                // Add the resource allocation to the database
                 db.ResourceAllocation.Add(resourceAllocation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            // Repopulate dropdown lists in case of validation errors
+            ViewBag.DisasterList = new SelectList(db.Disasters, "Id", "Location");
+            ViewBag.AmountAllocatedList = new SelectList(db.MoneyDonations, "Amount", "Amount");
+            ViewBag.ResourceList = new SelectList(db.GoodsDonations, "Description", "Description");
 
             return View(resourceAllocation);
         }
@@ -82,7 +98,7 @@ namespace DisasterPOEApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DisasterId,MoneyDonationId,AmountAllocated,Description,AllocationDate")] ResourceAllocation resourceAllocation)
+        public ActionResult Edit([Bind(Include = "Id,DisasterId,MoneyDonationId,GoodsDonationId,AmountAllocated,Resource,ResourceAmount,AllocationDate")] ResourceAllocation resourceAllocation)
         {
             if (ModelState.IsValid)
             {
@@ -126,55 +142,6 @@ namespace DisasterPOEApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-
-        public IActionResult AllocateMoney()
-        {
-            ViewData["Disasters"] = new SelectList(db.Disasters, "Id", "Location");
-            ViewData["AvailableMoneyDonations"] = new SelectList(db.MoneyDonations.Where(d => d.amount > 0), "id", "amount");
-            return (IActionResult)View();
-        }
-
-        [HttpPost]
-        public IActionResult AllocateMoney(int DisasterId, int MoneyDonationId, string Description)
-        {
-            if (ModelState.IsValid)
-            {
-                var amountAllocated = db.MoneyDonations
-                    .Where(d => d.id == MoneyDonationId)
-                    .Select(d => d.amount)
-                    .FirstOrDefault();
-
-                if (amountAllocated > 0)
-                {
-                    var allocation = new ResourceAllocation
-                    {
-                        DisasterId = DisasterId,
-                        MoneyDonationId = MoneyDonationId,
-                        Description = Description,
-                        AmountAllocated = amountAllocated,
-                        AllocationDate = DateTime.Now
-                    };
-
-                    // Update the MoneyDonation to set the Amount to 0
-                    var moneyDonation = db.MoneyDonations.Find(MoneyDonationId);
-                    if (moneyDonation != null)
-                    {
-                        moneyDonation.amount = 0;
-                    }
-
-                    db.ResourceAllocation.Add(allocation);
-                    db.SaveChanges();
-
-                    return (IActionResult)RedirectToAction("Index"); // Redirect to a page of your choice
-                }
-            }
-
-            // Handle validation errors and return to the allocation form
-            ViewData["Disasters"] = db.Disasters.ToList();
-            ViewData["AvailableMoneyDonations"] = db.MoneyDonations.Where(d => d.amount > 0).ToList();
-            return (IActionResult)View();
         }
     }
 }

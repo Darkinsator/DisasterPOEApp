@@ -12,8 +12,10 @@ namespace DisasterPOEApp.Models
         public int Id { get; set; }
         public int DisasterId { get; set; }
         public int MoneyDonationId { get; set; }
+        public int GoodsDonationId { get; set; }
         public int AmountAllocated { get; set; }
-        public string Description { get; set; }
+        public string Resource {  get; set; }   
+        public int ResourceAmount {  get; set; }
         public DateTime AllocationDate { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
-    @Html.ActionLink("Money allocation", "MoneyAllocation")
 </p>
 <table class="table">
     <tr>
@@ -19,10 +18,16 @@
             @Html.DisplayNameFor(model => model.MoneyDonationId)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.GoodsDonationId)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.AmountAllocated)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Resource)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResourceAmount)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AllocationDate)
@@ -39,10 +44,16 @@
             @Html.DisplayFor(modelItem => item.MoneyDonationId)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.GoodsDonationId)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.AmountAllocated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.DisplayFor(modelItem => item.Resource)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResourceAmount)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AllocationDate)

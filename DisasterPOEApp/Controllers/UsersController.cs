@@ -12,6 +12,7 @@ using DisasterPOEApp.Models;
 
 namespace DisasterPOEApp.Controllers
 {
+
     public class UsersController : Controller
     {
         private DisasterPOEAppContext db = new DisasterPOEAppContext();

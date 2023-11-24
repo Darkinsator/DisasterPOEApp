@@ -70,8 +70,10 @@
                         Id = c.Int(nullable: false, identity: true),
                         DisasterId = c.Int(nullable: false),
                         MoneyDonationId = c.Int(nullable: false),
+                        GoodsDonationId = c.Int(nullable: false),
                         AmountAllocated = c.Int(nullable: false),
-                        Description = c.String(),
+                        Resource = c.String(),
+                        ResourceAmount = c.Int(nullable: false),
                         AllocationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);

@@ -8,11 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using DisasterApp.Models;
 using DisasterPOEApp.Data;
+using Microsoft.AspNetCore.Mvc;
 
-namespace DisasterPOEApp.Controllers
+namespace DisasterApp.Controllers
 {
     public class MoneyDonationsController : Controller
     {
+
         private DisasterPOEAppContext db = new DisasterPOEAppContext();
 
         // GET: MoneyDonations
@@ -149,5 +151,14 @@ namespace DisasterPOEApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult TotalDonations()
+        {
+            decimal totalDonationAmount = db.MoneyDonations.Sum(d => d.amount);
+            ViewBag.TotalDonations = totalDonationAmount;
+            return View();
+        }
     }
+    
+
 }

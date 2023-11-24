@@ -1,9 +1,73 @@
-﻿@{
+﻿@model IEnumerable<DisasterPOEApp.Models.ResourceAllocation>
+
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron">
     <h1>Welcome to the DISASTER ALLEVIATION FOUNDATION WEB APP</h1>
+    <p>The total amount donated by all users is: <div>Total Donations: @ViewBag.TotalDonations</div></p>
+    <p>The total amount donated by all users is: <div>Total Donations: @ViewBag.TotalGoodsAmount</div></p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DisasterId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoneyDonationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GoodsDonationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountAllocated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Resource)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResourceAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllocationDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisasterId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoneyDonationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoodsDonationId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountAllocated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Resource)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourceAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AllocationDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
     <p class="lead">On this website you are able to donate goods or monetary items to the D.A.F or if your area has an ongoing disaster you are able to request resources from our supply stock.</p>
     <br><br><p>So you do not have to worry your area is in good hands. </p>
 </div>
