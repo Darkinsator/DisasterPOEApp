@@ -18,7 +18,8 @@ namespace DisasterPOEApp.Controllers
         // GET: GoodsDonations
         public ActionResult Index()
         {
-            return View(db.GoodsDonations.ToList());
+            var list = db.GoodsDonations.ToList();
+            return View(list);
         }
 
         // GET: GoodsDonations/Details/5

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Microsoft.EntityFrameworkCore;
+using DbContext = System.Data.Entity.DbContext;
 
 namespace DisasterPOEApp.Data
 {

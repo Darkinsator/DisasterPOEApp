@@ -13,6 +13,12 @@ namespace DisasterPOEApp.Controllers
 {
     public class ResourceAllocationsController : Controller
     {
+        private DisasterPOEAppContext _db;
+
+        public ResourceAllocationsController(DisasterPOEAppContext @object)
+        {
+            this._db = new DisasterPOEAppContext();
+        }
         private DisasterPOEAppContext db = new DisasterPOEAppContext();
 
         // GET: ResourceAllocations

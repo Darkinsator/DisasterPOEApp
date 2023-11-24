@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterPOEApp", "DisasterPOEApp\DisasterPOEApp.csproj", "{05E6DFCE-A93A-49A1-A668-63086F279719}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisasterPOEApp.Test", "DisasterPOEApp.Test\DisasterPOEApp.Test.csproj", "{E8C6D5E7-A678-46E4-BA4F-E0A207CE884B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{05E6DFCE-A93A-49A1-A668-63086F279719}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05E6DFCE-A93A-49A1-A668-63086F279719}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05E6DFCE-A93A-49A1-A668-63086F279719}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8C6D5E7-A678-46E4-BA4F-E0A207CE884B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8C6D5E7-A678-46E4-BA4F-E0A207CE884B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8C6D5E7-A678-46E4-BA4F-E0A207CE884B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8C6D5E7-A678-46E4-BA4F-E0A207CE884B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
