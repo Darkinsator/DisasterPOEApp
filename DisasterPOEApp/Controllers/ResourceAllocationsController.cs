@@ -13,12 +13,6 @@ namespace DisasterPOEApp.Controllers
 {
     public class ResourceAllocationsController : Controller
     {
-        private DisasterPOEAppContext _db;
-
-        public ResourceAllocationsController(DisasterPOEAppContext @object)
-        {
-            this._db = new DisasterPOEAppContext();
-        }
         private DisasterPOEAppContext db = new DisasterPOEAppContext();
 
         // GET: ResourceAllocations
@@ -45,11 +39,7 @@ namespace DisasterPOEApp.Controllers
         // GET: ResourceAllocations/Create
         public ActionResult Create()
         {
-            // Populate dropdown lists
-            ViewBag.DisasterList = new SelectList(db.Disasters, "Id", "Location");
-            ViewBag.AmountAllocatedList = new SelectList(db.MoneyDonations, "Amount", "Amount");
-            ViewBag.ResourceList = new SelectList(db.GoodsDonations, "Description", "Description");
-
+            PopulateDropdownLists();
             return View();
         }
 
@@ -63,12 +53,12 @@ namespace DisasterPOEApp.Controllers
                 // Set MoneyDonationId based on the selected amount
                 var selectedAmount = int.Parse(Request["AmountAllocated"]);
                 var moneyDonation = db.MoneyDonations.FirstOrDefault(d => d.amount == selectedAmount);
-                resourceAllocation.MoneyDonationId = (int)(moneyDonation?.id);
+                resourceAllocation.MoneyDonationId = moneyDonation.id;
 
                 // Set GoodsDonationId based on the selected resource
                 var selectedResource = Request["Resource"];
                 var goodsDonation = db.GoodsDonations.FirstOrDefault(d => d.description == selectedResource);
-                resourceAllocation.GoodsDonationId = (int)(goodsDonation?.id);
+                resourceAllocation.GoodsDonationId = goodsDonation.id;
 
                 // Add the resource allocation to the database
                 db.ResourceAllocation.Add(resourceAllocation);
@@ -76,11 +66,7 @@ namespace DisasterPOEApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Repopulate dropdown lists in case of validation errors
-            ViewBag.DisasterList = new SelectList(db.Disasters, "Id", "Location");
-            ViewBag.AmountAllocatedList = new SelectList(db.MoneyDonations, "Amount", "Amount");
-            ViewBag.ResourceList = new SelectList(db.GoodsDonations, "Description", "Description");
-
+            PopulateDropdownLists();
             return View(resourceAllocation);
         }
 
@@ -96,12 +82,11 @@ namespace DisasterPOEApp.Controllers
             {
                 return HttpNotFound();
             }
+            PopulateDropdownLists();
             return View(resourceAllocation);
         }
 
         // POST: ResourceAllocations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,DisasterId,MoneyDonationId,GoodsDonationId,AmountAllocated,Resource,ResourceAmount,AllocationDate")] ResourceAllocation resourceAllocation)
@@ -112,6 +97,7 @@ namespace DisasterPOEApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            PopulateDropdownLists();
             return View(resourceAllocation);
         }
 
@@ -148,6 +134,13 @@ namespace DisasterPOEApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private void PopulateDropdownLists()
+        {
+            ViewBag.DisasterList = new SelectList(db.Disasters, "Id", "Location");
+            ViewBag.AmountAllocatedList = new SelectList(db.MoneyDonations, "amount", "amount");
+            ViewBag.ResourceList = new SelectList(db.GoodsDonations, "description", "description");
         }
     }
 }
