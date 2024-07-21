@@ -53,7 +53,7 @@ namespace DisasterPOEApp.Controllers
         SqlDataReader dr;
         void ConnectionString()
         {
-            con.ConnectionString = "Server=tcp:newserverst10101149.database.windows.net,1433;Initial Catalog=databaseST10101149;Persist Security Info=False;User ID=adman;Password=AdminOP1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            con.ConnectionString = "Server=tcp:disaster-servernew.database.windows.net,1433;Initial Catalog=dbdisaster;Persist Security Info=False;User ID=jason.blankenberg@capaciti.org.za;Password=RaSeNsHuRiKeN18#;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Authentication='Active Directory Password';";
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

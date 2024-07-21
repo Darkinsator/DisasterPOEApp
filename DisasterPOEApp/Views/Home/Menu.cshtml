@@ -1,25 +1,35 @@
 ﻿@model DisasterApp.Models.MoneyDonation
-
 @{
     ViewBag.Title = "Menu";
 }
 
-<h2>Menu</h2>
+<h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div class="container">
+    <div class="jumbotron">
+        <h1>Welcome to the Disaster Management System</h1>
+        <p>This platform allows you to request assistance in the event of a disaster, make donations to support disaster relief efforts, and manage resources efficiently.</p>
+    </div>
 
-    @Html.ActionLink("Disaster Request", "CreateUser", "Disasters")
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    @Html.ActionLink("Donate", "Donations", "Home")
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" formaction="@Url.Action("CreateUser", "Disasters")" class="btn btn-primary btn-lg btn-block">
+                    Disaster Request
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button type="submit" formaction="@Url.Action("Donations", "Home")" class="btn btn-success btn-lg btn-block">
+                    Donate
+                </button>
+            </div>
+        </div>
+    }
 
-
-
-}
-
-<div class="col-md-offset-2 col-md-10">
-    <input type="submit" value="Create" class="btn btn-default" />
+   
 </div>
 
 @section Scripts {

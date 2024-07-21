@@ -3,16 +3,37 @@
 @Scripts.Render("~/bundles/modernizr")
 
 
+<!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .navbar-inverse .navbar-nav > li > a {
+            color: #000; /* Set button text color to black */
+        }
+
+            .navbar-inverse .navbar-nav > li > a:hover,
+            .navbar-inverse .navbar-nav > li > a:focus {
+                color: #fff; /* Change text color on hover/focus to white */
+                background-color: #11abe5; /* Optional: Change background color on hover/focus */
+            }
+
+        .navbar-inverse .navbar-brand {
+            color: #000; /* Set navbar brand text color to black */
+        }
+
+            .navbar-inverse .navbar-brand:hover,
+            .navbar-inverse .navbar-brand:focus {
+                color: #fff; /* Change navbar brand text color on hover/focus to white */
+            }
+    </style>
 </head>
-<body style="background-color:purple;">
-    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: orangered;">
+<body style="background-color:#fff;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #11abe5;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,22 +44,20 @@
                 @Html.ActionLink("DISASTER ALLEVIATION FOUNDATION", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right" style="color:azure; ">
+                <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("LOGIN", "Index", "Users")</li>
-                    <li >@Html.ActionLink("ADMIN LOGIN", "Index", "AuthorizedUsers")</li>
-
+                    <li>@Html.ActionLink("ADMIN LOGIN", "Index", "AuthorizedUsers")</li>
                 </ul>
-
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer >
-            <p style="color:azure;">&copy; @DateTime.Now.Year - ASP.NET Application</p>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - ASP.NET Application</p>
         </footer>
     </div>
 

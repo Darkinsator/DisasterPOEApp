@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DisasterPOEApp.Data;
 using DisasterPOEApp.Models;
 
 namespace DisasterPOEApp.Controllers
 {
-
     public class UsersController : Controller
     {
         private DisasterPOEAppContext db = new DisasterPOEAppContext();
@@ -20,52 +15,48 @@ namespace DisasterPOEApp.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            IEnumerable<User> objStudentDetailsList = db.Users.ToList();
-            return View(objStudentDetailsList);
-
-            //return View(db.Users.ToList());
+            var users = db.Users.ToList();
+            return View(users);
         }
 
+        // GET: Users/Menu
         public ActionResult Menu()
         {
             return View();
         }
 
+        // GET: Users/Login
         public ActionResult Login()
         {
             return View();
         }
-        SqlConnection con = new SqlConnection();
-        SqlCommand com = new SqlCommand();
-        SqlDataReader dr;
-        void ConnectionString()
-        {
-            con.ConnectionString = "Server=tcp:disaster-servernew.database.windows.net,1433;Initial Catalog=dbdisaster;Persist Security Info=False;User ID=jason.blankenberg@capaciti.org.za;Password=RaSeNsHuRiKeN18#;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Authentication='Active Directory Password';";
-        }
+
+        // POST: Users/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public ActionResult Login(User obj)
+        public ActionResult Login(User loginModel)
         {
-            ViewBag.Test = "1";
-            ConnectionString();
-            con.Open();
-            com.Connection = con;
-            com.CommandText = "select * from Users where Email = '" + obj.Email + "'and password = '" + obj.Password + "'";
-            dr = com.ExecuteReader();
-            if (dr.Read())
+            if (ModelState.IsValid)
             {
+                // Check if user exists
+                var user = db.Users.SingleOrDefault(u => u.Email == loginModel.Email && u.Password == loginModel.Password);
 
-                return View("/Views/Home/Menu.cshtml");
+                if (user != null)
+                {
+                    // Store user info in session or authentication cookie
+                    Session["UserId"] = user.Id;
+                    Session["UserName"] = user.Name;
+
+                    // Redirect to the desired page after successful login
+                    return View("/Views/Home/Menu.cshtml");
+                }
+                else
+                {
+                    // Add an error message if login fails
+                    ModelState.AddModelError("", "Invalid email or password.");
+                }
             }
-            else
-            {
-
-                return View();
-            }
-
-
-
+            return View();
         }
 
         // GET: Users/Details/5
@@ -90,8 +81,6 @@ namespace DisasterPOEApp.Controllers
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Surname,Email,Password")] User user)
@@ -102,7 +91,6 @@ namespace DisasterPOEApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(user);
         }
 
@@ -122,8 +110,6 @@ namespace DisasterPOEApp.Controllers
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Surname,Email,Password")] User user)

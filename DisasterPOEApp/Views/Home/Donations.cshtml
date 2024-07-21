@@ -1,24 +1,34 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Donations Page";
 }
 
-<h2>Donations</h2>
+<h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div class="container">
+    <div class="jumbotron">
+        <h1>Support Disaster Relief Efforts</h1>
+        <p>Your generous donations can make a significant impact in the lives of those affected by disasters. You can choose to donate goods or money to support our relief efforts.</p>
+    </div>
 
-    @Html.ActionLink("Donate Goods", "CreateUser", "GoodsDonations")
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    @Html.ActionLink("Donate Money", "CreateUser", "MoneyDonations")
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" formaction="@Url.Action("CreateUser", "GoodsDonations")" class="btn btn-primary btn-lg btn-block">
+                    Donate Goods
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button type="submit" formaction="@Url.Action("CreateUser", "MoneyDonations")" class="btn btn-success btn-lg btn-block">
+                    Donate Money
+                </button>
+            </div>
+        </div>
+    }
 
-
-
-}
-
-<div class="col-md-offset-2 col-md-10">
-    <input type="submit" value="Create" class="btn btn-default" />
+    
 </div>
 
 @section Scripts {

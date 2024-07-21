@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DisasterPOEApp.Data;
 using DisasterPOEApp.Models;
@@ -43,8 +41,6 @@ namespace DisasterPOEApp.Controllers
         }
 
         // POST: Disasters/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,StartDate,EndDate,Location,AidType")] Disaster disaster)
@@ -64,21 +60,40 @@ namespace DisasterPOEApp.Controllers
             return View();
         }
 
-        // POST: Disasters/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Disasters/CreateUser
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateUser([Bind(Include = "Id,StartDate,EndDate,Location,AidType")] Disaster disaster)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Disasters.Add(disaster);
-                db.SaveChanges();
-                return View("/Views/Home/Donations.cshtml");
+                if (ModelState.IsValid)
+                {
+                    db.Disasters.Add(disaster);
+                    db.SaveChanges();
+                    TempData["SuccessMessage"] = "Help is on the way!";
+                    return View("/Views/Home/Menu.cshtml");
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the exception details
+                System.Diagnostics.Debug.WriteLine("DbUpdateException: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Inner Exception: " + ex.InnerException.Message);
+                }
+                // Add a user-friendly error message
+                ModelState.AddModelError("", "An error occurred while saving the disaster. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                // Log any other exceptions
+                System.Diagnostics.Debug.WriteLine("Exception: " + ex.Message);
+                ModelState.AddModelError("", "An unexpected error occurred. Please try again later.");
             }
 
-            return View("/Views/Home/Donations.cshtml");
+            return View(disaster);
         }
 
         // GET: Disasters/Edit/5
@@ -97,8 +112,6 @@ namespace DisasterPOEApp.Controllers
         }
 
         // POST: Disasters/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,StartDate,EndDate,Location,AidType")] Disaster disaster)
